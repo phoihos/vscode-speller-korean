@@ -16,7 +16,7 @@ To use the extension go to the Command Palette (`Shift+Cmd+P` on macOS or `Shift
 ![Demo 1](./images/readme/demo1.gif)
 
 Or select `Correct Korean Spell in Document` from context menu (`Right-click` on editor).
-> You can see `Correct Korean Spell in Select` menu when you select some text (single or multi select).
+> You can see also `Correct Korean Spell in Select` menu when you select some text (single or multi select).
 
 ![Demo 2](./images/readme/demo2.png)
 
@@ -30,7 +30,7 @@ If you find any problems using this extension or you want to propose new feature
 
 ## Release Notes
 
-Detailed Release Notes are available in **Changelog** tab.
+Detailed Release Notes are available [here](https://github.com/phoihos/speller-korean/blob/master/CHANGELOG.md) or above **Changelog** tab.
 
 ## Powered by
 
