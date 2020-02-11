@@ -8,6 +8,7 @@
 		"url": "https://github.com/phoihos/speller-korean.git"
 	},
 	"license": "MIT",
+	"icon": "images/icon.png",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -16,17 +17,52 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:speller.fix"
+		"onCommand:speller.correct",
+		"onCommand:speller.correct.document",
+		"onCommand:speller.correct.selection"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "speller.fix",
-				"title": "Fix selection or document",
+				"command": "speller.correct",
+				"title": "Correct Selection or Document",
+				"category": "Speller-Korean"
+			},
+			{
+				"command": "speller.correct.document",
+				"title": "Correct Korean Spell in Document",
+				"category": "Speller-Korean"
+			},
+			{
+				"command": "speller.correct.selection",
+				"title": "Correct Korean Spell in Selection",
 				"category": "Speller-Korean"
 			}
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "speller.correct.document",
+					"when": "false"
+				},
+				{
+					"command": "speller.correct.selection",
+					"when": "false"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "speller.correct.document",
+					"group": "1_modification"
+				},
+				{
+					"command": "speller.correct.selection",
+					"when": "editorHasSelection",
+					"group": "1_modification"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
