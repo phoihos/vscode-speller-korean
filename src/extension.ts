@@ -1,23 +1,86 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as restm from 'typed-rest-client/RestClient';
+
+interface RestResult {
+	html: string;
+	errata_count: number;
+	origin_html: string;
+	notag_html: string;
+}
+
+interface RestMessage {
+	result: RestResult;
+}
+
+interface RestResponse {
+	message: RestMessage;
+}
+
+async function fixSpell(text: string, eol: string) {
+	// naver api function
+	let _fixSpell = async function (toFix: string, eol: string) {
+		const BASE_URL = 'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
+		let rest = new restm.RestClient('vscode-extension');
+
+		try {
+			let response = await rest.get<RestResponse>(BASE_URL + encodeURIComponent(toFix));
+			if (response.statusCode != 200)
+				throw new Error(`HTTP Error: ${response.statusCode}`);
+			else if (response.result == null)
+				throw new Error('HTTP Result is null');
+
+			let fixed = response.result.message.result.notag_html;
+			return fixed.replace(/<br>/g, eol).replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+		}
+		catch (e) {
+			console.error((<Error>e).message);
+			vscode.window.showErrorMessage((<Error>e).message);
+			return toFix;
+		}
+	};
+
+	const MAX_TEXT_COUNT = 500;
+	let chunk = ((text.length - 1) / MAX_TEXT_COUNT) + 1;
+	let fixedText: string = "";
+
+	for (let i = 0; i < chunk; ++i) {
+		let from = i * MAX_TEXT_COUNT;
+		let length = Math.min(text.length - from, MAX_TEXT_COUNT);
+
+		fixedText += await _fixSpell(text.substr(i * MAX_TEXT_COUNT, length), eol);
+	}
+
+	return fixedText;
+}
 
 // this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	let disposable = vscode.commands.registerCommand('speller.fix', async () => {
+		let editor = vscode.window.activeTextEditor;
+		if (editor == undefined)
+			return;
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "speller-korean" is now active!');
+		let document = editor.document;
+		let eol = document.eol == vscode.EndOfLine.LF ? '\n' : '\r\n';
+		let selections = editor.selections;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('speller.fix', () => {
-		// The code you place here will be executed every time your command is executed
+		if (selections.length == 1 && selections[0].isEmpty) {
+			let lastLine = document.lineAt(document.lineCount - 1);
+			let lastCharacter = lastLine.range.end.character;
+			selections[0] = new vscode.Selection(0, 0, lastLine.lineNumber, lastCharacter);
+		}
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+		for (let i = 0; i < selections.length; ++i) {
+			let selection = selections[i];
+			let fixed = await fixSpell(document.getText(selection), eol);
+
+			let options = {
+				undoStopBefore: (i == 0),
+				undoStopAfter: (i == selections.length - 1)
+			};
+
+			editor.edit((eb) => eb.replace(selection, fixed), options);
+		}
 	});
 
 	context.subscriptions.push(disposable);
