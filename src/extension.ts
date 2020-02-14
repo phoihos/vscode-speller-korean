@@ -55,14 +55,10 @@ async function correctSpell(text: string, eol: string) {
 
 // this method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
-	let commandCallback = async () => {
-		let editor = vscode.window.activeTextEditor;
-		if (editor == undefined)
-			return;
-
+	let commandCallback = async (editor: vscode.TextEditor) => {
 		let document = editor.document;
-		let eol = document.eol == vscode.EndOfLine.LF ? '\n' : '\r\n';
 		let selections = editor.selections;
+		const eol = (document.eol == vscode.EndOfLine.LF) ? '\n' : '\r\n';
 
 		if (selections.length == 1 && selections[0].isEmpty) {
 			let lastLine = document.lineAt(document.lineCount - 1);
@@ -83,9 +79,9 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	};
 
-	context.subscriptions.push(vscode.commands.registerCommand('speller.correct', commandCallback));
-	context.subscriptions.push(vscode.commands.registerCommand('speller.correct.document', commandCallback));
-	context.subscriptions.push(vscode.commands.registerCommand('speller.correct.selection', commandCallback));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('speller.correct', commandCallback));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('speller.correct.document', commandCallback));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('speller.correct.selection', commandCallback));
 }
 
 // this method is called when your extension is deactivated
