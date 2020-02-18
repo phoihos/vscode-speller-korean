@@ -18,23 +18,29 @@ interface RestResponse {
 
 async function correctSpell(text: string, eol: string) {
 	// naver api function
-	let _correctSpell = async function (toCorrect: string, eol: string) {
+	const _correctSpell = async function (toCorrect: string, eol: string) {
+		const _unescape = function (text: string) {
+			return text.replace(/<br>/g, eol)
+				.replace(/&lt;/g, '<')
+				.replace(/&gt;/g, '>')
+				.replace(/&quot;/g, '"');
+		}
 		const BASE_URL = 'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
-		let rest = new restm.RestClient('vscode-extension');
 
 		try {
+			let rest = new restm.RestClient('vscode-extension');
 			let response = await rest.get<RestResponse>(BASE_URL + encodeURIComponent(toCorrect));
 			if (response.statusCode != 200)
 				throw new Error(`HTTP Error: ${response.statusCode}`);
 			else if (response.result == null)
 				throw new Error('HTTP Result is null');
 
-			let corrected = response.result.message.result.notag_html;
-			return corrected.replace(/<br>/g, eol).replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+			return _unescape(response.result.message.result.notag_html);
 		}
 		catch (e) {
 			console.error((<Error>e).message);
 			vscode.window.showErrorMessage((<Error>e).message);
+
 			return toCorrect;
 		}
 	};
