@@ -17,9 +17,10 @@ interface RestResponse {
 }
 
 interface ProgressContext {
+	max: number;
+	pos: number;
+	step: number;
 	ratio: number;
-	corrected: number;
-	accumulated: number;
 }
 
 const API_BASE_URL = 'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
@@ -59,8 +60,8 @@ async function correctSpell(text: string, eol: string, progressContext: Progress
 		let from = i * MAX_TEXT_COUNT;
 		let length = Math.min(text.length - from, MAX_TEXT_COUNT);
 
+		progressContext.step++;
 		correctedText += await _correctSpell(text.substr(i * MAX_TEXT_COUNT, length));
-		progressContext.corrected++;
 	}
 
 	return correctedText;
@@ -88,9 +89,10 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		let progressContext: ProgressContext = {
-			ratio: (100 / chunk),
-			corrected: 0,
-			accumulated: 0
+			max: chunk,
+			pos: 0,
+			step: 0,
+			ratio: (100 / chunk)
 		};
 
 		let timerId = setTimeout(() => {
@@ -99,18 +101,20 @@ export function activate(context: vscode.ExtensionContext) {
 				cancellable: false,
 				title: 'Speller for Korean: Correcting...'
 			}, async (progress) => {
-				const _update = (resolve: any) => {
-					let prev = progressContext.accumulated;
-					progressContext.accumulated += (progressContext.corrected * progressContext.ratio);
-					progressContext.corrected = 0;
+				const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-					progress.report({ increment: (progressContext.accumulated - prev) });
+				do {
+					if (progressContext.step > 0) {
+						progress.report({ increment: (progressContext.step * progressContext.ratio) });
+						progressContext.pos += progressContext.step;
+						progressContext.step = 0;
+					}
 
-					if ((progressContext.accumulated + Number.EPSILON) >= 100) setTimeout(() => resolve(), 200);
-					else setTimeout(() => _update(resolve), 100);
-				};
+					await sleep(100);
 
-				await (new Promise(_update));
+				} while (progressContext.pos < progressContext.max);
+
+				await sleep(100);
 			});
 
 		}, 1000);
