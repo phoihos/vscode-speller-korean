@@ -16,20 +16,27 @@ interface RestResponse {
 	message: RestMessage;
 }
 
-async function correctSpell(text: string, eol: string) {
-	// naver api function
-	const _correctSpell = async function (toCorrect: string, eol: string) {
-		const _unescape = function (text: string) {
-			return text.replace(/<br>/g, eol)
+interface ProgressContext {
+	ratio: number;
+	corrected: number;
+	accumulated: number;
+}
+
+const API_BASE_URL = 'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
+const MAX_TEXT_COUNT = 500;
+
+async function correctSpell(text: string, eol: string, progressContext: ProgressContext) {
+	const _correctSpell = async (textChunk: string) => {
+		const _unescape = (str: string) => {
+			return str.replace(/<br>/g, eol)
 				.replace(/&lt;/g, '<')
 				.replace(/&gt;/g, '>')
 				.replace(/&quot;/g, '"');
 		}
-		const BASE_URL = 'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
 
 		try {
 			let rest = new restm.RestClient('vscode-extension');
-			let response = await rest.get<RestResponse>(BASE_URL + encodeURIComponent(toCorrect));
+			let response = await rest.get<RestResponse>(API_BASE_URL + encodeURIComponent(textChunk));
 			if (response.statusCode != 200)
 				throw new Error(`HTTP Error: ${response.statusCode}`);
 			else if (response.result == null)
@@ -41,19 +48,19 @@ async function correctSpell(text: string, eol: string) {
 			console.error((<Error>e).message);
 			vscode.window.showErrorMessage((<Error>e).message);
 
-			return toCorrect;
+			return textChunk;
 		}
 	};
 
-	const MAX_TEXT_COUNT = 500;
-	let chunk = ((text.length - 1) / MAX_TEXT_COUNT) + 1;
+	let chunk = Math.floor((text.length - 1) / MAX_TEXT_COUNT) + 1;
 	let correctedText: string = "";
 
 	for (let i = 0; i < chunk; ++i) {
 		let from = i * MAX_TEXT_COUNT;
 		let length = Math.min(text.length - from, MAX_TEXT_COUNT);
 
-		correctedText += await _correctSpell(text.substr(i * MAX_TEXT_COUNT, length), eol);
+		progressContext.corrected++;
+		correctedText += await _correctSpell(text.substr(i * MAX_TEXT_COUNT, length));
 	}
 
 	return correctedText;
@@ -72,17 +79,56 @@ export function activate(context: vscode.ExtensionContext) {
 			selections[0] = new vscode.Selection(0, 0, lastLine.lineNumber, lastCharacter);
 		}
 
-		for (let i = 0; i < selections.length; ++i) {
+		let chunk = 0;
+
+		let i = selections.length;
+		while (i--) {
 			let selection = selections[i];
-			let corrected = await correctSpell(document.getText(selection), eol);
+			chunk += Math.floor((document.getText(selection).length - 1) / MAX_TEXT_COUNT) + 1;
+		}
+
+		let progressContext: ProgressContext = {
+			ratio: (100 / chunk),
+			corrected: 0,
+			accumulated: 0
+		};
+
+		let timerId = setTimeout(() => {
+			vscode.window.withProgress({
+				location: vscode.ProgressLocation.Notification,
+				cancellable: false,
+				title: 'Speller for Korean: Correcting...'
+			}, async (progress) => {
+				const _update = (resolve: any) => {
+					let prev = progressContext.accumulated;
+					progressContext.accumulated += (progressContext.corrected * progressContext.ratio);
+					progressContext.corrected = 0;
+
+					progress.report({ increment: (progressContext.accumulated - prev) });
+
+					if (progressContext.accumulated >= 99.9) setTimeout(() => resolve(), 200);
+					else setTimeout(() => _update(resolve), 100);
+				};
+
+				await (new Promise(_update));
+			});
+
+		}, 1000);
+
+		i = selections.length;
+		while (i--) {
+			let selection = selections[i];
+			let corrected = await correctSpell(document.getText(selection), eol, progressContext);
 
 			let options = {
-				undoStopBefore: (i == 0),
-				undoStopAfter: (i == selections.length - 1)
+				undoStopBefore: (i == selections.length - 1),
+				undoStopAfter: (i == 0)
 			};
 
-			editor.edit((eb) => eb.replace(selection, corrected), options);
+			await editor.edit((eb) => eb.replace(selection, corrected), options);
 		}
+
+		clearTimeout(timerId);
 	};
 
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('speller.correct', commandCallback));
