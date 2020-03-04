@@ -59,8 +59,8 @@ async function correctSpell(text: string, eol: string, progressContext: Progress
 		let from = i * MAX_TEXT_COUNT;
 		let length = Math.min(text.length - from, MAX_TEXT_COUNT);
 
-		progressContext.corrected++;
 		correctedText += await _correctSpell(text.substr(i * MAX_TEXT_COUNT, length));
+		progressContext.corrected++;
 	}
 
 	return correctedText;
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 					progress.report({ increment: (progressContext.accumulated - prev) });
 
-					if (progressContext.accumulated >= 99.9) setTimeout(() => resolve(), 200);
+					if ((progressContext.accumulated + Number.EPSILON) >= 100) setTimeout(() => resolve(), 200);
 					else setTimeout(() => _update(resolve), 100);
 				};
 
