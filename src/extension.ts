@@ -122,14 +122,18 @@ export function activate(context: vscode.ExtensionContext) {
 		i = selections.length;
 		while (i--) {
 			let selection = selections[i];
-			let corrected = await correctSpell(document.getText(selection), eol, progressContext);
+			let selectedText = document.getText(selection);
+			let correctedText = await correctSpell(document.getText(selection), eol, progressContext);
+
+			if (correctedText == selectedText)
+				continue;
 
 			let options = {
 				undoStopBefore: (i == selections.length - 1),
 				undoStopAfter: (i == 0)
 			};
 
-			await editor.edit((eb) => eb.replace(selection, corrected), options);
+			await editor.edit((eb) => eb.replace(selection, correctedText), options);
 		}
 
 		clearTimeout(timerId);

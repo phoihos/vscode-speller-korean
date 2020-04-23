@@ -2,6 +2,9 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.2.2] - 2020-04-23
+- Fix to do not mark as dirty for "Not corrected text"
+
 ## [1.2.1] - 2020-03-04
 - Fix a number comparison precision issue
 
