@@ -2,6 +2,9 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.3.2] - 2020-05-12
+- Add keyboard shortcut `Shift+Alt+K` for **Speller-Korean: Correct Selection or Document** command
+
 ## [1.2.2] - 2020-04-23
 - Fix to do not mark as dirty for "Not corrected text"
 

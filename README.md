@@ -13,6 +13,7 @@
 ## 사용법
 
 이 확장 프로그램을 사용하려면 명령 팔레트(macOS는 `Cmd+Shift+P`, Windows는 `Ctrl+Shift+P`)로 이동하여 `Speller-Korean: Correct Selection or Document` 명령어를 실행합니다.
+> 단축키 `Shift+Alt+K` 를 사용할 수 있습니다.
 
 ![Demo 1](./images/readme/demo1.gif)
 
@@ -57,6 +58,7 @@ To install this extension go to `View->Extensions` and search for `Speller for K
 ## Usage
 
 To use the extension go to the Command Palette (`Cmd+Shift+P` on macOS or `Ctrl+Shift+P` on Windows) and launch `Speller-Korean: Correct Selection or Document` command.
+> You can use keyboard shortcut `Shift+Alt+K`.
 
 ![Demo 1](./images/readme/demo1.gif)
 
