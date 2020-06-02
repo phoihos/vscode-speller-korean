@@ -13,12 +13,19 @@
 	},
 	"homepage": "https://github.com/phoihos/speller-korean/blob/master/README.md",
 	"license": "MIT",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"engines": {
 		"vscode": "^1.43.0"
 	},
 	"categories": [
 		"Other"
+	],
+	"keywords": [
+		"korean",
+		"grammar",
+		"grammar-checker",
+		"proofread",
+		"speller"
 	],
 	"activationEvents": [
 		"onCommand:speller.correct",
@@ -85,15 +92,15 @@
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
-		"@types/node": "^12.12.39",
-		"@types/vscode": "^1.45.0",
-		"@typescript-eslint/eslint-plugin": "^2.33.0",
-		"@typescript-eslint/parser": "^2.33.0",
+		"@types/node": "^12.12.43",
+		"@types/vscode": "~1.43.0",
+		"@typescript-eslint/eslint-plugin": "^2.34.0",
+		"@typescript-eslint/parser": "^2.34.0",
 		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
-		"mocha": "^7.1.2",
-		"typescript": "^3.9.2",
-		"vscode-test": "^1.3.0"
+		"mocha": "^7.2.0",
+		"typescript": "^3.9.3",
+		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {
 		"typed-rest-client": "^1.7.3"

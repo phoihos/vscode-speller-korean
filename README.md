@@ -18,7 +18,7 @@
 ![Demo 1](./images/readme/demo1.gif)
 
 또는 상황에 맞는 메뉴(에디터에서 마우스 우 클릭)에서 `Correct Korean Spell in Document`를 선택합니다.
-> 텍스트가 선택(단일 또는 다중)되어 있다면 `Correct Korean Spell in Select` 메뉴 항목을 볼 수 있습니다.
+> 텍스트가 선택(단일 또는 다중)되어 있다면 `Correct Korean Spell in Selection` 메뉴 항목을 볼 수 있습니다.
 
 ![Demo 2](./images/readme/demo2.png)
 
@@ -63,7 +63,7 @@ To use the extension go to the Command Palette (`Cmd+Shift+P` on macOS or `Ctrl+
 ![Demo 1](./images/readme/demo1.gif)
 
 Or select `Correct Korean Spell in Document` from context menu (`Right-click` on editor).
-> You can see also `Correct Korean Spell in Select` menu item when you select some text (single or multi select).
+> You can see also `Correct Korean Spell in Selection` menu item when you select some text (single or multi select).
 
 ![Demo 2](./images/readme/demo2.png)
 

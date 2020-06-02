@@ -2,6 +2,9 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.3.3] - 2020-06-02
+- Update README and internal dependencies
+
 ## [1.3.2] - 2020-05-12
 - Add keyboard shortcut `Shift+Alt+K` for **Speller-Korean: Correct Selection or Document** command
 
