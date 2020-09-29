@@ -46,7 +46,7 @@ async function correctTextChunk(textChunk: string, eol: string, onError?: (messa
 export const MAX_CHUNK_SIZE = 500;
 
 export async function correctText(text: string, eol: string, onStep?: () => void, onError?: (message: string) => void) {
-    let correctedText: string = "";
+    let correctedText = "";
 
     const chunkCount = Math.floor((text.length - 1) / MAX_CHUNK_SIZE) + 1;
     for (let i = 0; i < chunkCount; ++i) {
