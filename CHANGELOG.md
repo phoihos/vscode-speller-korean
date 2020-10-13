@@ -1,6 +1,9 @@
 # Change Log
-
 All notable changes to the "Speller for Korean" extension will be documented in this file.
+
+## [1.4.0] - 2020-10-13
+- Change project repository url
+- Update README
 
 ## [1.3.4] - 2020-07-20
 - Update internal dependencies to solve security vulnerability
