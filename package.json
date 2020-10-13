@@ -6,12 +6,12 @@
 	"publisher": "phoihos",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/phoihos/speller-korean.git"
+		"url": "https://github.com/phoihos/vscode-speller-korean.git"
 	},
 	"bugs": {
-		"url": "https://github.com/phoihos/speller-korean/issues"
+		"url": "https://github.com/phoihos/vscode-speller-korean/issues"
 	},
-	"homepage": "https://github.com/phoihos/speller-korean/blob/master/README.md",
+	"homepage": "https://github.com/phoihos/vscode-speller-korean/blob/master/README.md",
 	"license": "MIT",
 	"version": "1.3.4",
 	"engines": {
