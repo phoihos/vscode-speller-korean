@@ -6,7 +6,7 @@
 	"publisher": "phoihos",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/phoihos/vscode-speller-korean.git"
+		"url": "https://github.com/phoihos/vscode-speller-korean"
 	},
 	"bugs": {
 		"url": "https://github.com/phoihos/vscode-speller-korean/issues"
