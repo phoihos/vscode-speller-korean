@@ -29,11 +29,11 @@
 ## 이슈
 
 이 확장 프로그램을 사용하는 중에 문제를 발견하거나 새로운 기능을 제안하길 원하신다면,
-부담 없이 [Github](https://github.com/phoihos/speller-korean/issues)에 이슈를 등록해주세요.
+부담 없이 [Github](https://github.com/phoihos/vscode-speller-korean/issues)에 이슈를 등록해주세요.
 
 ## 릴리스 정보
 
-상세한 릴리스 정보는 [여기](https://github.com/phoihos/speller-korean/blob/master/CHANGELOG.md) 또는 상단의 **변경 로그** 탭에서 확인 가능합니다.
+상세한 릴리스 정보는 [여기](https://github.com/phoihos/vscode-speller-korean/blob/master/CHANGELOG.md) 또는 상단의 **변경 로그** 탭에서 확인 가능합니다.
 
 ## API supported by
 
@@ -73,11 +73,11 @@ Currently, there is no settings.
 
 ## Issues
 
-If you find any problems using this extension or you want to propose new features to it, feel free to open an issue on [Github](https://github.com/phoihos/speller-korean/issues).
+If you find any problems using this extension or you want to propose new features to it, feel free to open an issue on [Github](https://github.com/phoihos/vscode-speller-korean/issues).
 
 ## Release Notes
 
-Detailed Release Notes are available [here](https://github.com/phoihos/speller-korean/blob/master/CHANGELOG.md) or above **Changelog** tab.
+Detailed Release Notes are available [here](https://github.com/phoihos/vscode-speller-korean/blob/master/CHANGELOG.md) or above **Changelog** tab.
 
 ## API supported by
 
