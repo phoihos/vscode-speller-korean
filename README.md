@@ -53,7 +53,7 @@ You can correct **Korean Spell** in selected text or whole document.
 
 ## Installation
 
-To install this extension go to `View->Extensions` and search for `Speller for Korean`. Next click Install and then Reload.
+To install this extension go to `View->Extensions` and search for `speller-korean`. Next click Install and then Reload.
 
 ## Usage
 
