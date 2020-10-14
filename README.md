@@ -67,7 +67,7 @@ Or select `Correct Korean Spell in Document` from context menu (`Right-click` on
 
 ![Demo 2](./images/readme/demo2.png)
 
-## Extension Settings
+## Settings
 
 Currently, there is no settings.
 
