@@ -26,7 +26,7 @@ function unescape(str: string, eol: string) {
 
 async function correctTextChunk(textChunk: string, eol: string, onError?: (message: string) => void) {
     try {
-        let rest = new restm.RestClient('vscode-extension');
+        let rest = new restm.RestClient('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36');
         let response = await rest.get<IRestResponse>(SPELLER_API_URL + encodeURIComponent(textChunk));
         if (response.statusCode != 200)
             throw new Error(`HTTP Error: ${response.statusCode}`);
