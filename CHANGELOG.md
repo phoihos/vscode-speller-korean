@@ -2,6 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.X.0] - 202X-XX-XX
+
+- Refactored : Changed all command functions to command classes
+
 ## [1.4.0] - 2020-10-13
 
 - Change project repository url
