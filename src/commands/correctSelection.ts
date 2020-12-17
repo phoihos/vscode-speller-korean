@@ -1,4 +1,4 @@
-import { ICommand } from '../commandManager';
+import { ICommand } from '../vscode-util';
 import { CorrectCommand } from './correct'
 
 export class CorrectSelectionCommand implements ICommand {

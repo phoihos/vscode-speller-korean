@@ -1,4 +1,4 @@
-import { ICommand } from '../commandManager';
+import { ICommand } from '../vscode-util';
 import { correctText, MAX_CHUNK_SIZE } from '../textCorrector';
 
 import * as vscode from 'vscode';

@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import CommandManager from './commandManager'
+import { CommandManager } from './vscode-util'
 import commands from './commands';
 
 // this method is called when your extension is activated
