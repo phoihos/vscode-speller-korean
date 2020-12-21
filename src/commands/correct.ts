@@ -26,7 +26,7 @@ export class CorrectCommand implements ICommand {
             selections[0] = new vscode.Selection(0, 0, lastLine.lineNumber, lastCharacter);
         }
 
-        const chunkCount = this.calcChunkCount(activeTextEditor, selections);
+        const chunkCount = this._calcChunkCount(activeTextEditor, selections);
         const progressContext: IProgressContext = {
             max: chunkCount,
             pos: 0,
@@ -34,14 +34,14 @@ export class CorrectCommand implements ICommand {
             ratio: 100 / chunkCount
         };
 
-        const timerId = setTimeout(() => this.showProgress(progressContext), 500);
+        const timerId = setTimeout(() => this._showProgress(progressContext), 500);
 
-        await this.correct(activeTextEditor, selections, progressContext);
+        await this._correct(activeTextEditor, selections, progressContext);
 
         clearTimeout(timerId);
     }
 
-    private async correct(
+    private async _correct(
         editor: vscode.TextEditor,
         selections: vscode.Selection[],
         progressContext: IProgressContext
@@ -71,7 +71,7 @@ export class CorrectCommand implements ICommand {
         }
     }
 
-    private calcChunkCount(editor: vscode.TextEditor, selections: vscode.Selection[]): number {
+    private _calcChunkCount(editor: vscode.TextEditor, selections: vscode.Selection[]): number {
         const document = editor.document;
 
         let chunk = 0;
@@ -83,7 +83,7 @@ export class CorrectCommand implements ICommand {
         return chunk;
     }
 
-    private showProgress(progressContext: IProgressContext): void {
+    private _showProgress(progressContext: IProgressContext): void {
         const options: vscode.ProgressOptions = {
             title: 'Speller for Korean: Correcting...',
             location: vscode.ProgressLocation.Notification
@@ -97,14 +97,14 @@ export class CorrectCommand implements ICommand {
                     progressContext.step = 0;
                 }
 
-                await this.sleep(100);
+                await this._sleep(100);
             } while (progressContext.pos < progressContext.max);
 
-            await this.sleep(100);
+            await this._sleep(100);
         });
     }
 
-    private sleep(ms: number): Promise<void> {
+    private _sleep(ms: number): Promise<void> {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }
