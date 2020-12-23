@@ -2,9 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
-## [1.X.0] - 202X-XX-XX
+## [1.5.0] - 2020-12-23
 
 - Refactored : Changed all command functions to command classes
+- Updated : Changed delay time to 500ms to show progress
 
 ## [1.4.0] - 2020-10-13
 
