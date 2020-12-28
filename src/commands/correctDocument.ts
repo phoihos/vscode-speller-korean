@@ -7,7 +7,7 @@ export class CorrectDocumentCommand implements ICommand {
 		private readonly _correctCommand: ICommand
 	) { }
 
-	public execute(): Promise<void> {
+	public async execute(): Promise<void> {
 		return this._correctCommand.execute();
 	}
 }
