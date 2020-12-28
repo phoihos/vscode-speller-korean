@@ -1,11 +1,10 @@
 import { ICommand } from '../vscode-util';
-import { CorrectCommand } from './correct'
 
 export class CorrectDocumentCommand implements ICommand {
 	public readonly id = 'speller.correct.document';
 
 	public constructor(
-		private readonly _correctCommand: CorrectCommand
+		private readonly _correctCommand: ICommand
 	) { }
 
 	public execute(): Promise<void> {
