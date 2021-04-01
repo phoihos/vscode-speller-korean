@@ -2,6 +2,11 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.5.1] - 2021-04-01
+
+- Updated : Internal dependencies
+- Fixed : Security update (update some packages)
+
 ## [1.5.0] - 2020-12-23
 
 - Refactored : Changed all command functions to command classes
