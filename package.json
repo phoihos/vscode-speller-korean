@@ -13,7 +13,7 @@
 	},
 	"homepage": "https://github.com/phoihos/vscode-speller-korean/blob/master/README.md",
 	"license": "MIT",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"engines": {
 		"vscode": "^1.43.0"
 	},
@@ -103,6 +103,6 @@
 		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {
-		"typed-rest-client": "^1.8.3"
+		"typed-rest-client": "^1.8.4"
 	}
 }
