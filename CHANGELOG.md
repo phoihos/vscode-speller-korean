@@ -2,6 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.5.3] - 2021-06-11
+
+- Updated : Internal dependencies to solve security vulnerabilities
+
 ## [1.5.2] - 2021-05-07
 
 - Updated : Internal dependencies to solve security vulnerabilities
