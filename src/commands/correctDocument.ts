@@ -1,4 +1,4 @@
-import { ICommand } from '../vscode-util';
+import { ICommand } from '@phoihos/vsce-util';
 
 export class CorrectDocumentCommand implements ICommand {
 	public readonly id = 'speller.correct.document';

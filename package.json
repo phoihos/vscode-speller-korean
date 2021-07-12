@@ -103,6 +103,7 @@
 		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {
+		"@phoihos/vsce-util": "https://github.com/phoihos/vsce-util.git#v0.0.1",
 		"typed-rest-client": "^1.8.4"
 	}
 }

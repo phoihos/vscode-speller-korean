@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import vscodeUtil from './vscode-util'
+import vsceUtil from '@phoihos/vsce-util'
 import commands from './commands';
 
 // this method is called when your extension is activated
@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function registerCommands(): vscode.Disposable {
-	const commandManager = new vscodeUtil.CommandManager();
+	const commandManager = new vsceUtil.CommandManager();
 
 	const correctCommand = commandManager.register(
 		new commands.CorrectCommand()
