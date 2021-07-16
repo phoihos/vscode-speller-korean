@@ -2,6 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.5.4] - 2021-07-19
+
+- Fixed : Reverse (from bottom to top) multi selections correction work incorrectly issue
+
 ## [1.5.3] - 2021-06-11
 
 - Updated : Internal dependencies to solve security vulnerabilities

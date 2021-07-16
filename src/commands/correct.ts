@@ -49,6 +49,8 @@ export class CorrectCommand implements ICommand {
         const document = editor.document;
         const eol = document.eol == vscode.EndOfLine.LF ? '\n' : '\r\n';
 
+        selections = selections.sort((a, b) => a.start.line - b.start.line || a.start.character - b.start.character);
+
         let i = selections.length;
         while (i--) {
             const selection = selections[i];
