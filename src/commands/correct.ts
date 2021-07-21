@@ -14,19 +14,19 @@ export class CorrectCommand implements ICommand {
     public readonly id = 'speller.correct';
 
     public async execute(): Promise<void> {
-        const { activeTextEditor } = vscode.window;
-        if (!activeTextEditor) return;
+        const editor = vscode.window.activeTextEditor;
+        if (editor === undefined) return;
 
-        const selections = activeTextEditor.selections;
-        const document = activeTextEditor.document;
+        const selections = editor.selections;
+        const document = editor.document;
 
-        if (selections.length == 1 && selections[0].isEmpty) {
+        if (selections.length === 1 && selections[0].isEmpty) {
             const lastLine = document.lineAt(document.lineCount - 1);
             const lastCharacter = lastLine.range.end.character;
             selections[0] = new vscode.Selection(0, 0, lastLine.lineNumber, lastCharacter);
         }
 
-        const chunkCount = this._calcChunkCount(activeTextEditor, selections);
+        const chunkCount = this._calcChunkCount(editor, selections);
         const progressContext: IProgressContext = {
             max: chunkCount,
             pos: 0,
@@ -36,7 +36,7 @@ export class CorrectCommand implements ICommand {
 
         const timerId = setTimeout(() => this._showProgress(progressContext), 500);
 
-        await this._correct(activeTextEditor, selections, progressContext);
+        await this._correct(editor, selections, progressContext);
 
         clearTimeout(timerId);
     }
@@ -47,7 +47,7 @@ export class CorrectCommand implements ICommand {
         progressContext: IProgressContext
     ): Promise<void> {
         const document = editor.document;
-        const eol = document.eol == vscode.EndOfLine.LF ? '\n' : '\r\n';
+        const eol = document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
 
         selections = selections.sort((a, b) => a.start.line - b.start.line || a.start.character - b.start.character);
 
@@ -62,11 +62,11 @@ export class CorrectCommand implements ICommand {
                 vscode.window.showErrorMessage
             );
 
-            if (correctedText == selectedText) continue;
+            if (correctedText === selectedText) continue;
 
             const options = {
-                undoStopBefore: i == selections.length - 1,
-                undoStopAfter: i == 0
+                undoStopBefore: i === selections.length - 1,
+                undoStopAfter: i === 0
             };
 
             await editor.edit((eb) => eb.replace(selection, correctedText), options);
