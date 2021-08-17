@@ -11,7 +11,7 @@
 	"bugs": {
 		"url": "https://github.com/phoihos/vscode-speller-korean/issues"
 	},
-	"homepage": "https://github.com/phoihos/vscode-speller-korean/blob/master/README.md",
+	"homepage": "https://github.com/phoihos/vscode-speller-korean#readme",
 	"license": "MIT",
 	"version": "1.5.4",
 	"engines": {
