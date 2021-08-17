@@ -82,3 +82,7 @@ Detailed Release Notes are available [here](https://github.com/phoihos/vscode-sp
 ## API supported by
 
 https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=네이버+맞춤법+검사기
+
+## Attributions
+
+Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)
