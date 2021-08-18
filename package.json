@@ -1,109 +1,115 @@
 {
-	"name": "speller-korean",
-	"displayName": "Speller for Korean",
-	"description": "Korean spell checker, Correct korean spell",
-	"icon": "images/icon.png",
-	"publisher": "phoihos",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/phoihos/vscode-speller-korean"
-	},
-	"bugs": {
-		"url": "https://github.com/phoihos/vscode-speller-korean/issues"
-	},
-	"homepage": "https://github.com/phoihos/vscode-speller-korean#readme",
-	"license": "MIT",
-	"version": "1.5.4",
-	"engines": {
-		"vscode": "^1.49.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"keywords": [
-		"korean",
-		"grammar",
-		"grammar-checker",
-		"proofread",
-		"speller"
-	],
-	"activationEvents": [
-		"onCommand:speller.correct",
-		"onCommand:speller.correct.document",
-		"onCommand:speller.correct.selection"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "speller.correct",
-				"title": "Correct Selection or Document",
-				"category": "Speller-Korean"
-			},
-			{
-				"command": "speller.correct.document",
-				"title": "Correct Korean Spell in Document",
-				"category": "Speller-Korean"
-			},
-			{
-				"command": "speller.correct.selection",
-				"title": "Correct Korean Spell in Selection",
-				"category": "Speller-Korean"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "speller.correct.document",
-					"when": "false"
-				},
-				{
-					"command": "speller.correct.selection",
-					"when": "false"
-				}
-			],
-			"editor/context": [
-				{
-					"command": "speller.correct.document",
-					"group": "1_modification"
-				},
-				{
-					"command": "speller.correct.selection",
-					"when": "editorHasSelection",
-					"group": "1_modification"
-				}
-			]
-		},
-		"keybindings": [
-			{
-				"command": "speller.correct",
-				"key": "shift+alt+k"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.2.2",
-		"@types/node": "^14.17.3",
-		"@types/vscode": "^1.49.0",
-		"@typescript-eslint/eslint-plugin": "^4.26.1",
-		"@typescript-eslint/parser": "^4.26.1",
-		"eslint": "^7.28.0",
-		"glob": "^7.1.7",
-		"mocha": "^8.4.0",
-		"typescript": "^4.0.2",
-		"vscode-test": "^1.4.0"
-	},
-	"dependencies": {
-		"@phoihos/vsce-util": "https://github.com/phoihos/vsce-util.git#v0.0.1",
-		"typed-rest-client": "^1.8.4"
-	}
+  "name": "speller-korean",
+  "displayName": "Speller for Korean",
+  "description": "Korean spell checker, Correct korean spell",
+  "icon": "images/icon.png",
+  "publisher": "phoihos",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoihos/vscode-speller-korean"
+  },
+  "bugs": {
+    "url": "https://github.com/phoihos/vscode-speller-korean/issues"
+  },
+  "homepage": "https://github.com/phoihos/vscode-speller-korean#readme",
+  "license": "MIT",
+  "version": "1.6.0",
+  "engines": {
+    "vscode": "^1.49.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "korean",
+    "grammar",
+    "grammar-checker",
+    "proofread",
+    "speller"
+  ],
+  "activationEvents": [
+    "onCommand:speller.correct",
+    "onCommand:speller.correct.document",
+    "onCommand:speller.correct.selection"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "speller.correct",
+        "title": "Correct Selection or Document",
+        "category": "Speller-Korean"
+      },
+      {
+        "command": "speller.correct.document",
+        "title": "Correct Korean Spell in Document",
+        "category": "Speller-Korean"
+      },
+      {
+        "command": "speller.correct.selection",
+        "title": "Correct Korean Spell in Selection",
+        "category": "Speller-Korean"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "speller.correct.document",
+          "when": "false"
+        },
+        {
+          "command": "speller.correct.selection",
+          "when": "false"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "speller.correct.document",
+          "group": "1_modification"
+        },
+        {
+          "command": "speller.correct.selection",
+          "when": "editorHasSelection",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "speller.correct",
+        "key": "shift+alt+k"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "test-compile": "tsc -p ./",
+    "test-watch": "tsc -watch -p ./",
+    "pretest": "npm run test-compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.17.3",
+    "@types/vscode": "^1.49.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "eslint": "^7.28.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "ts-loader": "^8.3.0",
+    "typescript": "^4.0.2",
+    "vscode-test": "^1.4.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "@phoihos/vsce-util": "https://github.com/phoihos/vsce-util.git#v0.0.1",
+    "typed-rest-client": "^1.8.5"
+  }
 }

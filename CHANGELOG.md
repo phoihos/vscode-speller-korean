@@ -2,6 +2,11 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.6.0] - 2021-08-18
+
+- Refactored : Bundle the extension to reduce the size
+- Changed : New extension icon
+
 ## [1.5.4] - 2021-07-19
 
 - Fixed : Reverse (from bottom to top) multi selections correction work incorrectly issue
