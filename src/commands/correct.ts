@@ -18,7 +18,7 @@ export class CorrectCommand implements ICommand {
     const editor = vscode.window.activeTextEditor;
     if (editor === undefined) return;
 
-    const selections = editor.selections;
+    const selections = [...editor.selections];
     const document = editor.document;
 
     if (selections.length === 1 && selections[0].isEmpty) {
