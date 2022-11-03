@@ -109,7 +109,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@phoihos/vsce-util": "https://github.com/phoihos/vsce-util.git#v0.1.0",
+    "@phoihos/vsce-util": "github:phoihos/vsce-util#v0.1.0",
     "typed-rest-client": "^1.8.9"
   }
 }
