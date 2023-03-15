@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { ICommand } from '@phoihos/vsce-util';
+import { Command } from '@phoihos/vsce-util';
 
 import { correctText, MAX_CHUNK_SIZE } from '../textCorrector';
 
@@ -11,7 +11,7 @@ interface IProgressContext {
   ratio: number;
 }
 
-export class CorrectCommand implements ICommand {
+export class CorrectCommand implements Command {
   public readonly id = 'speller.correct';
 
   public async execute(): Promise<void> {
