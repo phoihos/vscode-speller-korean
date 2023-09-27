@@ -2,6 +2,11 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.6.2] - 2023-09-26
+
+- Fixed : Cannot read properties of undefined (reading 'notag_html')
+- Updated : Internal dependencies
+
 ## [1.6.1] - 2022-01-21
 
 - Updated : Internal dependencies
@@ -64,7 +69,7 @@ All notable changes to the "Speller for Korean" extension will be documented in 
 
 ## [1.1.0] - 2020-02-18
 
-- Fix unescaping issue with double quotes
+- Fix un-escaping issue with double quotes
 
 ## [1.0.0] - 2020-02-11
 

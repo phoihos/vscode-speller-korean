@@ -1,7 +1,8 @@
 import { RestClient } from 'typed-rest-client/RestClient';
 
-const SPELLER_API_URL =
-  'https://m.search.naver.com/p/csearch/ocontent/util/SpellerProxy?color_blindness=0&q=';
+import { getSpellerApiUrl } from './spellerProviderHelper';
+
+let SPELLER_API_URL: string | undefined = undefined;
 
 interface IRestResult {
   html: string;
@@ -12,6 +13,7 @@ interface IRestResult {
 
 interface IRestMessage {
   result: IRestResult;
+  error: string;
 }
 
 interface IRestResponse {
@@ -33,11 +35,21 @@ async function correctTextChunk(
 ) {
   try {
     let rest = new RestClient(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.36'
     );
-    let response = await rest.get<IRestResponse>(SPELLER_API_URL + encodeURIComponent(textChunk));
-    if (response.statusCode !== 200) throw new Error(`HTTP Error: ${response.statusCode}`);
-    else if (response.result === null) throw new Error('HTTP Result is null');
+    let response = await rest.get<IRestResponse>(SPELLER_API_URL! + encodeURIComponent(textChunk));
+    if (response.statusCode !== 200) {
+      throw new Error(`Http error: ${response.statusCode}`);
+    } else if (response.result === null) {
+      throw new Error('Http result is null');
+    } else if (response.result.message.error !== undefined) {
+      if (response.result.message.error === '유효한 키가 아닙니다.') {
+        SPELLER_API_URL = undefined;
+        throw new Error('Http error: Temporary Error Occurred. Please Try Again');
+      } else {
+        throw new Error(`Http response error: ${response.result.message.error}`);
+      }
+    }
 
     return unescape(response.result.message.result.notag_html, eol);
   } catch (e) {
@@ -56,6 +68,14 @@ export async function correctText(
   onStep?: () => void,
   onError?: (message: string) => void
 ) {
+  // Check Speller API URL
+  if (SPELLER_API_URL === undefined) {
+    SPELLER_API_URL = await getSpellerApiUrl();
+    if (SPELLER_API_URL === undefined) {
+      throw new Error('The speller provider is not available');
+    }
+  }
+
   let correctedText = '';
 
   const chunkCount = Math.floor((text.length - 1) / MAX_CHUNK_SIZE) + 1;
