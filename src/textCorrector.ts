@@ -1,24 +1,8 @@
-import { RestClient } from 'typed-rest-client/RestClient';
+import axios from 'axios';
 
-import { getSpellerApiUrl } from './spellerProviderHelper';
+import { getSpellerApiUrl, SpellerApiResponse } from './spellerProviderHelper';
 
 let SPELLER_API_URL: string | undefined = undefined;
-
-interface IRestResult {
-  html: string;
-  errata_count: number;
-  origin_html: string;
-  notag_html: string;
-}
-
-interface IRestMessage {
-  result: IRestResult;
-  error: string;
-}
-
-interface IRestResponse {
-  message: IRestMessage;
-}
 
 function unescape(str: string, eol: string) {
   return str
@@ -34,24 +18,30 @@ async function correctTextChunk(
   onError?: (message: string) => void
 ) {
   try {
-    let rest = new RestClient(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.36'
+    const response = await axios.get<SpellerApiResponse>(
+      SPELLER_API_URL! + encodeURIComponent(textChunk),
+      {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.36'
+        }
+      }
     );
-    let response = await rest.get<IRestResponse>(SPELLER_API_URL! + encodeURIComponent(textChunk));
-    if (response.statusCode !== 200) {
-      throw new Error(`Http error: ${response.statusCode}`);
-    } else if (response.result === null) {
-      throw new Error('Http result is null');
-    } else if (response.result.message.error !== undefined) {
-      if (response.result.message.error === '유효한 키가 아닙니다.') {
+
+    if (response.status !== 200) {
+      throw new Error(`Http error: ${response.status}`);
+    } else if (response.data === null) {
+      throw new Error('Http error: Response data is null');
+    } else if (response.data.message.error !== undefined) {
+      if (response.data.message.error === '유효한 키가 아닙니다.') {
         SPELLER_API_URL = undefined;
         throw new Error('Http error: Temporary Error Occurred. Please Try Again');
       } else {
-        throw new Error(`Http response error: ${response.result.message.error}`);
+        throw new Error(`Speller API error: ${response.data.message.error}`);
       }
     }
 
-    return unescape(response.result.message.result.notag_html, eol);
+    return unescape(response.data.message.result.notag_html, eol);
   } catch (e) {
     console.error((<Error>e).message);
     onError?.((<Error>e).message);

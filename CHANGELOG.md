@@ -2,6 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.6.3] - 2023-10-06
+
+- Refactored : Remove `typed-rest-client` module
+
 ## [1.6.2] - 2023-09-26
 
 - Fixed : Cannot read properties of undefined (reading 'notag_html')
