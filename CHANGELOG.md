@@ -2,6 +2,10 @@
 
 All notable changes to the "Speller for Korean" extension will be documented in this file.
 
+## [1.6.4] - 2026-04-23
+
+- Fixed : The speller provider is not available
+
 ## [1.6.3] - 2023-10-06
 
 - Refactored : Remove `typed-rest-client` module
